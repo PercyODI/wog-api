@@ -1,6 +1,7 @@
 {
     "env": {
-        "PORT": 8083
+        "PORT": 8083,
+        "NODE_ENV": "development"
     },
     "watch": [
         "src"
