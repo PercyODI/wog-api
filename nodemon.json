@@ -1,0 +1,10 @@
+{
+    "env": {
+        "PORT": 8083
+    },
+    "watch": [
+        "src"
+    ],
+    "exec": "npm run build:dev && node .//dist//main.bundle.js",
+    "ext": "js,json,ts"
+}
