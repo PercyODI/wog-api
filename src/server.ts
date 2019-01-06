@@ -1,5 +1,7 @@
 import * as express from 'express';
 import * as sslify from 'express-sslify';
+import * as graphqlHttp from 'express-graphql';
+import {Schema} from './schema';
 
 const app = express();
 const port = process.env.PORT || 8081;
@@ -13,6 +15,11 @@ if (environment === 'production') {
 app.get('/', (req, res) => {
     res.json({ 'test': 'true', 'Added Prop': 'I changed!' });
 });
+
+app.use('/gql', graphqlHttp({
+    schema: Schema,
+    graphiql: true
+}));
 
 app.listen(port, () => {
     console.log(`server started on port ${port}.`);
