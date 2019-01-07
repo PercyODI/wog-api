@@ -1,5 +1,6 @@
 const path = require('path')
-const webpack = require('webpack')
+// const webpack = require('webpack')
+// const gqlTagTransformer = require('ts-transform-graphql-tag').getTransformer
 
 const ROOT = path.resolve(__dirname, 'src');
 const DESTINATION = path.resolve(__dirname, 'dist');
@@ -34,8 +35,14 @@ module.exports = {
                 use: 'tslint-loader'
             },
             {
-                use: 'ts-loader',
-                exclude: /node_modules/
+                loader: 'ts-loader',
+                exclude: /node_modules/,
+                test: /.tsx?$/,
+                // options: {
+                //     getCustomTransformers: () => ({
+                //         before: [gqlTagTransformer()]
+                //     })
+                // }
             }
         ]
     }
