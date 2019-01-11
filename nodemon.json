@@ -6,6 +6,6 @@
     "watch": [
         "src"
     ],
-    "exec": "npm run build:dev && node .//dist//main.bundle.js",
+    "exec": "npm run build:dev && node --inspect=0.0.0.0:9222 -r dotenv/config ./dist/server.js",
     "ext": "js,json,ts"
 }

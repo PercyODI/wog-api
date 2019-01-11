@@ -8,14 +8,16 @@ const DESTINATION = path.resolve(__dirname, 'dist');
 module.exports = {
     target: "node",
     context: ROOT,
-
+    devtool: 'source-map',
     entry: {
         'main': './server.ts'
     },
 
     output: {
-        filename: '[name].bundle.js',
-        path: DESTINATION
+        filename: 'server.js',
+        path: DESTINATION,
+        devtoolModuleFilenameTemplate        : '[absolute-resource-path]',
+        devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
     },
 
     resolve: {
