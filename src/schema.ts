@@ -11,8 +11,13 @@ type Query {
     test: String
 }
 
+type Mutation {
+    test: String
+}
+
 schema {
-    query: Query
+    query: Query,
+    mutation: Mutation
 }
 `;
 
@@ -28,22 +33,5 @@ const executableSchema = makeExecutableSchema({
     typeDefs: [typeDefs, UserType],
     resolvers: merge(resolvers, UserResolvers)
 });
-
-// const schema = new GraphQLSchema({
-//     query: new GraphQLObjectType({
-//         name: 'RootQueryType',
-//         fields: {
-//             test: {
-//                 type: GraphQLString,
-//                 resolve() {
-//                     return 'this is a test';
-//                 }
-//             },
-//             user: {
-//                 type: UserType,
-//             }
-//         }
-//     })
-// });
 
 export { executableSchema as Schema };

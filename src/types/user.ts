@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
-import { v1 as neo4j } from 'neo4j-driver';
+import * as grapheneDao from '../services/grapheneDao';
+import { AddArgumentsAsVariables } from 'graphql-tools';
 
 const typeDefs = gql`
 type User {
@@ -7,25 +8,30 @@ type User {
 }
 
 extend type Query {
-    user: User
+    user: [User]
+}
+
+extend type Mutation {
+    addUser(name: String): String
 }
 `;
 
+export interface User {
+    name: String;
+}
+
 const resolvers = {
     Query: {
-        async user() {
-            debugger;
-            var graphenedbURL = process.env.GRAPHENEDB_BOLT_URL;
-            var graphenedbUser = process.env.GRAPHENEDB_BOLT_USER;
-            var graphenedbPass = process.env.GRAPHENEDB_BOLT_PASSWORD;
+        async user(): Promise<User[]> {
+            return await grapheneDao.GetAllUsers();
+        }
+    },
 
-            var driver = neo4j.driver(graphenedbURL, neo4j.auth.basic(graphenedbUser, graphenedbPass));
-            var session = driver.session();
-            return await session
-                .run('MATCH (user:User) RETURN user.Name');
-            // return {
-            //     name: 'Pearse'
-            // };
+    Mutation: {
+        async addUser(_: any, args: any): Promise<String> {
+            var res = await grapheneDao.AddUser(args.name);
+            return JSON.stringify(res);
+            // return 'Done.';
         }
     }
 };
